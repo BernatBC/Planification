@@ -55,7 +55,7 @@ f.write("(:init\n")
 G = nx.Graph()
 
 visited = []
-left = [i for i in range(1, nbases+1)]
+left = [i for i in range(nbases)]
 edges = []
 
 G.add_nodes_from(left)
@@ -89,7 +89,17 @@ while (nedges > 0):
 G.add_edges_from(edges)
 pos = nx.kamada_kawai_layout(G, scale=20)
 
-nx.draw(G, pos, with_labels=True, font_weight='bold')
+color_map = []
+for node in G:
+    if node < n_asentamientos:
+        color_map.append('yellow')
+    else: 
+        color_map.append('orange')      
+
+nx.draw(G, pos, with_labels=True, font_weight='bold', node_color=color_map)
 
 plt.show()
+
+# Rover placement
+
 f.close()
