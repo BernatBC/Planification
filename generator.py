@@ -11,7 +11,9 @@ f.write("""(define (problem expert-logistic)
 npersones = input("# de Persones: ")
 ncargues = input("# de Càrregues: ")
 nrovers = input("# de Rovers: ")
-nbases = input("# de Bases: ")
+nbases = int(input("# de Bases: "))
+nedges = int(input("# de Connexions entre bases ("+str(nbases-1)+"-"+str(nbases*(nbases-1)/2)+"): "))
+
 
 for i in range(int(npersones)):
     f.write("p"+str(i)+" ")
@@ -44,6 +46,37 @@ for i in range(int(nrovers)):
     f.write("r"+str(i)+" ")
 
 f.write(" - rover\n)\n\n")
+f.write("(:init\n")
+
+# Generarem un graf aleatori connex
+visited = []
+left = [i for i in range(1, nbases+1)]
+edges = []
+
+# Node inicial
+visited.append(random.choice(left))
+left.remove(visited[0])
+
+# Generarem un Spanning Tree (n-1 arestes)
+while (len(left) != 0):
+    vis = random.choice(visited)
+    new = random.choice(left)
+    f.write("(hay-camino b"+str(vis)+" b"+str(new)+")\n")
+    f.write("(hay-camino b"+str(new)+" b"+str(vis)+")\n")
+    edges.append((vis, new))
+    nedges -= 1
+    visited.append(new)
+    left.remove(new)
+
+while (nedges > 0):
+    n1 = random.choice(visited)
+    n2 = random.choice(visited)
+    if ((n1, n2) in edges or (n2, n1) in edges):
+        continue
+    edges.append((n1, n2))
+    f.write("(hay-camino b"+str(n1)+" b"+str(n2)+")\n")
+    f.write("(hay-camino b"+str(n2)+" b"+str(n1)+")\n")
+    nedges -= 1
 
 
 f.close()
