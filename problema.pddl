@@ -22,6 +22,7 @@
         (hay-camino b3 b2)
         (hay-camino b2 b1)
         (= (current-capacity r) 0)
+        (= (gas-level r) 10)
     )
 
     (:goal
