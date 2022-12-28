@@ -11,11 +11,13 @@ f.write("""(define (problem expert-logistic)
     (:objects
 """)
 
-npersones = input("# de Persones: ")
-ncargues = input("# de Càrregues: ")
-nrovers = input("# de Rovers: ")
+npersones = int(input("# de Persones: "))
+ncargues = int(input("# de Càrregues: "))
+nrovers = int(input("# de Rovers: "))
 nbases = int(input("# de Bases: "))
 nedges = int(input("# de Connexions entre bases ("+str(nbases-1)+"-"+str(nbases*(nbases-1)//2)+"): "))
+npeticions = int(input("# de Peticiones: "))
+ext2 = input("Añadir combustible y capacidades (EXT2)? (Y/N): ")
 
 
 for i in range(int(npersones)):
@@ -96,10 +98,48 @@ for node in G:
     else: 
         color_map.append('orange')      
 
+# Rover placement
+
+for r in range(nrovers):
+    base = random.choice(visited)
+    f.write("(aparcado-en r"+str(r)+" b"+str(base)+")\n")
+
+
+for p in range(npersones):
+    base = random.randint(0,n_asentamientos-1)
+    f.write("(esta-en p"+str(p)+" b"+str(base)+")\n")
+
+for c in range(ncargues):
+    base = random.randint(n_asentamientos, nbases-1)
+    f.write("(esta-en c"+str(c)+" b"+str(base)+")\n")
+
+if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
+    for r in range(nrovers):
+        f.write("(= (current-capacity r"+str(r)+") 0)\n")
+        f.write("(= (gas-level r"+str(r)+") "+str(random.randint(nbases, nbases*2))+")\n")
+
+f.write("\n)\n\n(:goal\n(and\n")
+
+used_petitions = []
+
+while (npeticions > 0):
+    loc = random.randint(0, npersones+ncargues-1)
+    if (loc in used_petitions):
+        continue
+    base = random.randint(0, n_asentamientos-1)
+    if (loc < npersones):
+        # loc és una persona
+        f.write("(esta-en p"+str(loc)+" b"+str(base)+")\n")
+    else:
+        f.write("(esta-en c"+str(loc-npersones)+" b"+str(base)+")\n")
+
+    npeticions -= 1
+    used_petitions.append(loc)
+
+f.write("\n)\n)\n)")
+f.close()
+
+
 nx.draw(G, pos, with_labels=True, font_weight='bold', node_color=color_map)
 
 plt.show()
-
-# Rover placement
-
-f.close()
