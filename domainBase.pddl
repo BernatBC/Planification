@@ -28,8 +28,7 @@
         :precondition
         (and
             (aparcado-en ?rov ?from)
-            (hay-camino ?from ?to) ;Comentar si es dirigido o no
-                                    ; Preguntar si el rover tiene que estar tripulado
+            (or (hay-camino ?from ?to) (hay-camino ?to ?from))
         )
 
         :effect

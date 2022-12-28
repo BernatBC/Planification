@@ -1,4 +1,7 @@
 import random
+import networkx as nx
+import matplotlib.pyplot as plt
+import numpy as np
 
 name = input("Nom del fitxer problema a generar: ")
 f = open(name+".pddl", "w")
@@ -12,7 +15,7 @@ npersones = input("# de Persones: ")
 ncargues = input("# de Càrregues: ")
 nrovers = input("# de Rovers: ")
 nbases = int(input("# de Bases: "))
-nedges = int(input("# de Connexions entre bases ("+str(nbases-1)+"-"+str(nbases*(nbases-1)/2)+"): "))
+nedges = int(input("# de Connexions entre bases ("+str(nbases-1)+"-"+str(nbases*(nbases-1)//2)+"): "))
 
 
 for i in range(int(npersones)):
@@ -49,9 +52,13 @@ f.write(" - rover\n)\n\n")
 f.write("(:init\n")
 
 # Generarem un graf aleatori connex
+G = nx.Graph()
+
 visited = []
 left = [i for i in range(1, nbases+1)]
 edges = []
+
+G.add_nodes_from(left)
 
 # Node inicial
 visited.append(random.choice(left))
@@ -62,21 +69,27 @@ while (len(left) != 0):
     vis = random.choice(visited)
     new = random.choice(left)
     f.write("(hay-camino b"+str(vis)+" b"+str(new)+")\n")
-    f.write("(hay-camino b"+str(new)+" b"+str(vis)+")\n")
+    #f.write("(hay-camino b"+str(new)+" b"+str(vis)+")\n")
     edges.append((vis, new))
     nedges -= 1
     visited.append(new)
     left.remove(new)
 
+# Acabem de omplir arestes aleatories
 while (nedges > 0):
     n1 = random.choice(visited)
     n2 = random.choice(visited)
-    if ((n1, n2) in edges or (n2, n1) in edges):
+    if ((n1, n2) in edges or (n2, n1) in edges or n1 == n2):
         continue
     edges.append((n1, n2))
     f.write("(hay-camino b"+str(n1)+" b"+str(n2)+")\n")
-    f.write("(hay-camino b"+str(n2)+" b"+str(n1)+")\n")
+    #f.write("(hay-camino b"+str(n2)+" b"+str(n1)+")\n")
     nedges -= 1
 
+G.add_edges_from(edges)
+pos = nx.kamada_kawai_layout(G, scale=20)
 
+nx.draw(G, pos, with_labels=True, font_weight='bold')
+
+plt.show()
 f.close()

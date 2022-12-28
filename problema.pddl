@@ -17,8 +17,6 @@
         (esta-en c2 b3)
         (esta-en c3 b3)
         (aparcado-en r b2)
-        (hay-camino b1 b2)
-        (hay-camino b2 b3)
         (hay-camino b3 b2)
         (hay-camino b2 b1)
         (= (current-capacity r) 0)
