@@ -21,6 +21,7 @@
         (hay-camino b2 b3)
         (hay-camino b3 b2)
         (hay-camino b2 b1)
+        (= (current-capacity r) 0)
     )
 
     (:goal
