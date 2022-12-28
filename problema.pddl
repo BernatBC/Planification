@@ -19,7 +19,8 @@
         (aparcado-en r b2)
         (hay-camino b1 b2)
         (hay-camino b2 b3)
-        (hay-camino b3 b1)
+        (hay-camino b3 b2)
+        (hay-camino b2 b1)
     )
 
     (:goal

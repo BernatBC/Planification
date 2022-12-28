@@ -11,10 +11,10 @@
     )
 
     (:predicates
-        (esta-en ?localizable - loc ?base - b)
-        (aparcado-en ?rover - rov ?base - b)
-        (esta-en-rover ?localizable - loc ?rover - rov)
-        (hay-camino ?base - b1 ?base - b2)
+        (esta-en ?loc - localizable ?b - base)
+        (aparcado-en ?rov - rover ?b - base)
+        (esta-en-rover ?loc - localizable ?rov - rover)
+        (hay-camino ?bas - base ?bas2 - base)
     )
 
     (:action mover-rover
