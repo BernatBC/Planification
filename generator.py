@@ -17,7 +17,10 @@ nrovers = int(input("# de Rovers: "))
 nbases = int(input("# de Bases: "))
 nedges = int(input("# de Connexions entre bases ("+str(nbases-1)+"-"+str(nbases*(nbases-1)//2)+"): "))
 npeticions = int(input("# de Peticiones: "))
-ext2 = input("Añadir combustible y capacidades (EXT2)? (Y/N): ")
+ext1 = input("Añadir capacidades (EXT1)? (Y/N): ")
+ext2 = input("Añadir combustible (EXT2)? (Y/N): ")
+if (ext2):
+    quest = input("[EXT2] Optimizar el combustible usado? (Y/N): ")
 
 
 for i in range(int(npersones)):
@@ -113,9 +116,13 @@ for c in range(ncargues):
     base = random.randint(n_asentamientos, nbases-1)
     f.write("(esta-en c"+str(c)+" b"+str(base)+")\n")
 
-if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
+if (ext1 in ["Y", "y", "Yes", "yes", "YES"]):
     for r in range(nrovers):
         f.write("(= (current-capacity r"+str(r)+") 0)\n")
+
+
+if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
+    for r in range(nrovers):
         f.write("(= (gas-level r"+str(r)+") "+str(random.randint(nbases, nbases*2))+")\n")
 
 f.write("\n)\n\n(:goal\n(and\n")
@@ -136,7 +143,17 @@ while (npeticions > 0):
     npeticions -= 1
     used_petitions.append(loc)
 
-f.write("\n)\n)\n)")
+f.write("\n)\n)\n")
+
+if (quest in ["Y", "y", "Yes", "yes", "YES"]):
+    f.write("(:metric maximize\n")
+    f.write("(+ "*(nrovers-1))
+    f.write("(gas-level r0) ")
+    for r in range(1, nrovers):
+        f.write(" (gas-level r"+str(r)+") )")
+    f.write(")\n")
+
+f.write("\n)")
 f.close()
 
 
