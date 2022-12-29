@@ -14,12 +14,12 @@ f.write("""(define (problem expert-logistic)
 npersones = int(input("# de Persones: "))
 ncargues = int(input("# de Càrregues: "))
 nrovers = int(input("# de Rovers: "))
-nbases = int(input("# de Bases: "))
+nbases = int(input("# de Bases (min 3): "))
 nedges = int(input("# de Connexions entre bases ("+str(nbases-1)+"-"+str(nbases*(nbases-1)//2)+"): "))
 npeticions = int(input("# de Peticiones: "))
 ext1 = input("Añadir capacidades (EXT1)? (Y/N): ")
 ext2 = input("Añadir combustible (EXT2)? (Y/N): ")
-if (ext2):
+if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
     quest = input("[EXT2] Optimizar el combustible usado? (Y/N): ")
 
 
@@ -33,9 +33,9 @@ for i in range(int(ncargues)):
 
 f.write("- carga\n")
 
-n_asentamientos = random.randint(1,int(nbases)-1)
+n_asentamientos = random.randint(2, nbases-1)
 
-print(n_asentamientos)
+npeticions = min(npeticions, (npersones+ncargues)*n_asentamientos)
 
 mybool = False
 
@@ -127,21 +127,39 @@ if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
 
 f.write("\n)\n\n(:goal\n(and\n")
 
-used_petitions = []
+dic = {}
 
 while (npeticions > 0):
     loc = random.randint(0, npersones+ncargues-1)
-    if (loc in used_petitions):
-        continue
     base = random.randint(0, n_asentamientos-1)
-    if (loc < npersones):
-        # loc és una persona
-        f.write("(esta-en p"+str(loc)+" b"+str(base)+")\n")
+    
+    if (loc in dic.keys()):
+        if (base in dic.get(loc)):
+            continue
+        dic[loc].append(base)
     else:
-        f.write("(esta-en c"+str(loc-npersones)+" b"+str(base)+")\n")
+        dic[loc] = [base]
 
     npeticions -= 1
-    used_petitions.append(loc)
+
+print(dic)
+
+for (loc, listbases) in dic.items():
+    if (len(listbases) == 1):
+        if (loc < npersones):
+            f.write("(esta-en p"+str(loc)+" b"+str(listbases[0])+")\n")
+        else:
+            f.write("(esta-en c"+str(loc-npersones)+" b"+str(listbases[0])+")\n")
+        continue
+
+    f.write("(or ")
+    for b in listbases:
+        if (loc < npersones):
+            f.write("(esta-en p"+str(loc)+" b"+str(b)+") ")
+        else:
+            f.write("(esta-en c"+str(loc-npersones)+" b"+str(b)+") ")
+
+    f.write(")\n")
 
 f.write("\n)\n)\n")
 

@@ -13,6 +13,7 @@
     (:functions
         (current-capacity ?rov - rover)
         (gas-level ?rov - rover)
+        (sum-petitions ?rov - rover)
     )
 
     (:predicates
@@ -20,7 +21,10 @@
         (aparcado-en ?rov - rover ?b - base)
         (esta-en-rover ?loc - localizable ?rov - rover)
         (hay-camino ?bas - base ?bas2 - base)
-        ; Duplicar el "load" o añadir un predicado de "es-persona ?loc - localizable"
+        (important-petition ?loc - localizable ?b - base)
+        (medium-petition ?loc - localizable ?b - base)
+        (low-petition ?loc - localizable ?b - base)
+
     )
 
     (:action mover-rover
