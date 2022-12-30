@@ -199,9 +199,18 @@ if (quest in ["Y", "y", "Yes", "yes", "YES"] and ext3 not in ["Y", "y", "Yes", "
     f.write(")\n")
 
 elif (ext3 in ["Y", "y", "Yes", "yes", "YES"] and quest2 not in ["Y", "y", "Yes", "yes", "YES"]):
-    f.write("(:metric maximize\n")
+    f.write("(:metric minimize\n")
     f.write("(sum-petitions) ")
     f.write(")\n")
+
+elif (ext3 in ["Y", "y", "Yes", "yes", "YES"] and quest2 in ["Y", "y", "Yes", "yes", "YES"]):
+    f.write("(:metric minimize\n")
+    f.write("(- (* (sum-petitions) 3) ")
+    f.write("(+"*(nrovers-1))
+    f.write("(gas-level r0) ")
+    for r in range(1, nrovers):
+        f.write(" (gas-level r"+str(r)+") )")
+    f.write("))\n")
 
 f.write("\n)")
 f.close()

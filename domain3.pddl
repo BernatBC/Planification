@@ -44,9 +44,9 @@
         )
         :effect (and
             (servido ?loc)
-            (when (low-petition ?loc ?b) (increase (sum-petitions) 1))
+            (when (low-petition ?loc ?b) (increase (sum-petitions) 3))
             (when (medium-petition ?loc ?b) (increase (sum-petitions) 2))
-            (when (important-petition ?loc ?b) (increase (sum-petitions) 3))
+            (when (important-petition ?loc ?b) (increase (sum-petitions) 1))
             (not (esta-en ?loc ?b))
         )
     )
