@@ -23,6 +23,11 @@ quest = "N"
 if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
     quest = input("[EXT2] Optimizar el combustible usado? (Y/N): ")
 
+ext3 = input("Añadir prioridades (EXT3)? (Y/N): ")
+quest3 = "N"
+if (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
+    quest2 = input("[EXT3] Optimizar además el combustible usado? (Y/N): ")
+
 for i in range(int(npersones)):
     f.write("p"+str(i)+" ")
 
@@ -125,7 +130,10 @@ if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
     for r in range(nrovers):
         f.write("(= (gas-level r"+str(r)+") "+str(random.randint(nbases, nbases*2))+")\n")
 
-f.write("\n)\n\n(:goal\n(and\n")
+if (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
+    for r in range(nbases):
+        f.write("(= (sum-petitions b"+str(r)+") 0)\n")
+
 
 dic = {}
 
@@ -142,7 +150,27 @@ while (npeticions > 0):
 
     npeticions -= 1
 
-print(dic)
+if (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
+    for (loc, listbases) in dic.items():
+        for b in listbases:
+            rnd = random.randint(1,3)
+            if (loc < npersones):
+                if (rnd == 1):
+                    f.write("(low-petition p"+str(loc)+" b"+str(b)+")\n")
+                elif (rnd == 2):
+                    f.write("(medium-petition p"+str(loc)+" b"+str(b)+")\n")
+                else:
+                    f.write("(important-petition p"+str(loc)+" b"+str(b)+")\n")
+            else:
+                if (rnd == 1):
+                    f.write("(low-petition c"+str(loc-npersones)+" b"+str(b)+")\n")
+                elif (rnd == 2):
+                    f.write("(medium-petition p"+str(loc-npersones)+" b"+str(b)+")\n")
+                else:
+                    f.write("(important-petition p"+str(loc-npersones)+" b"+str(b)+")\n")
+
+
+f.write("\n)\n\n(:goal\n(and\n")
 
 for (loc, listbases) in dic.items():
     if (len(listbases) == 1):
@@ -163,12 +191,20 @@ for (loc, listbases) in dic.items():
 
 f.write("\n)\n)\n")
 
-if (quest in ["Y", "y", "Yes", "yes", "YES"]):
+if (quest in ["Y", "y", "Yes", "yes", "YES"] and ext3 not in ["Y", "y", "Yes", "yes", "YES"]):
     f.write("(:metric maximize\n")
     f.write("(+ "*(nrovers-1))
     f.write("(gas-level r0) ")
     for r in range(1, nrovers):
         f.write(" (gas-level r"+str(r)+") )")
+    f.write(")\n")
+
+elif (ext3 in ["Y", "y", "Yes", "yes", "YES"] and quest2 not in ["Y", "y", "Yes", "yes", "YES"]):
+    f.write("(:metric maximize\n")
+    f.write("(+ "*(nbases-1))
+    f.write("(sum-petitions b0) ")
+    for b in range(1, nbases):
+        f.write(" (sum-petitions b"+str(b)+") )")
     f.write(")\n")
 
 f.write("\n)")
