@@ -15,7 +15,7 @@
         (aparcado-en ?rov - rover ?b - base)
         (esta-en-rover ?loc - localizable ?rov - rover)
         (hay-camino ?bas - base ?bas2 - base)
-    )
+    ) 
 
     (:action mover-rover
         :parameters

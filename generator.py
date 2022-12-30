@@ -19,9 +19,9 @@ nedges = int(input("# de Connexions entre bases ("+str(nbases-1)+"-"+str(nbases*
 npeticions = int(input("# de Peticiones: "))
 ext1 = input("Añadir capacidades (EXT1)? (Y/N): ")
 ext2 = input("Añadir combustible (EXT2)? (Y/N): ")
+quest = "N"
 if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
     quest = input("[EXT2] Optimizar el combustible usado? (Y/N): ")
-
 
 for i in range(int(npersones)):
     f.write("p"+str(i)+" ")
