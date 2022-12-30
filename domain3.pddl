@@ -1,6 +1,6 @@
 (define (domain expert-logistic)
 
-    (:requirements :adl :fluents :equality :conditional-effects)
+    (:requirements :adl :equality :conditional-effects :fluents)
 
     (:types
         rover - object
@@ -13,7 +13,7 @@
     (:functions
         (current-capacity ?rov - rover)
         (gas-level ?rov - rover)
-        (sum-petitions ?b - base)
+        (sum-petitions)
     )
 
     (:predicates
@@ -44,9 +44,9 @@
         )
         :effect (and
             (servido ?loc)
-            (when (low-petition ?loc ?b) (increase (sum-petitions ?b) 1))
-            (when (medium-petition ?loc ?b) (increase (sum-petitions ?b) 2))
-            (when (important-petition ?loc ?b) (increase (sum-petitions ?b) 3))
+            (when (low-petition ?loc ?b) (increase (sum-petitions) 1))
+            (when (medium-petition ?loc ?b) (increase (sum-petitions) 2))
+            (when (important-petition ?loc ?b) (increase (sum-petitions) 3))
             (not (esta-en ?loc ?b))
         )
     )

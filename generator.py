@@ -131,8 +131,7 @@ if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
         f.write("(= (gas-level r"+str(r)+") "+str(random.randint(nbases, nbases*2))+")\n")
 
 if (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
-    for r in range(nbases):
-        f.write("(= (sum-petitions b"+str(r)+") 0)\n")
+    f.write("(= (sum-petitions) 0)\n")
 
 
 dic = {}
@@ -201,10 +200,7 @@ if (quest in ["Y", "y", "Yes", "yes", "YES"] and ext3 not in ["Y", "y", "Yes", "
 
 elif (ext3 in ["Y", "y", "Yes", "yes", "YES"] and quest2 not in ["Y", "y", "Yes", "yes", "YES"]):
     f.write("(:metric maximize\n")
-    f.write("(+ "*(nbases-1))
-    f.write("(sum-petitions b0) ")
-    for b in range(1, nbases):
-        f.write(" (sum-petitions b"+str(b)+") )")
+    f.write("(sum-petitions) ")
     f.write(")\n")
 
 f.write("\n)")
