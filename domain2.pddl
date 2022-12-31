@@ -33,9 +33,9 @@
 
         :precondition
         (and
-            (> (gas-level ?rov) 0)
             (aparcado-en ?rov ?from)
             (or (hay-camino ?from ?to) (hay-camino ?to ?from))
+            (> (gas-level ?rov) 0)
         )
 
         :effect
@@ -56,8 +56,8 @@
 
         :precondition
         (and
-            (< (+ (current-capacity ?rov) 1) 3)
             (aparcado-en ?rov ?b)
+            (< (+ (current-capacity ?rov) 1) 3)
             (esta-en ?loc ?b)
         )
         :effect
@@ -78,8 +78,8 @@
 
         :precondition
         (and
-            (< (+ (current-capacity ?rov) 2) 3)
             (aparcado-en ?rov ?b)
+            (< (+ (current-capacity ?rov) 2) 3)
             (esta-en ?loc ?b)
             
         )
@@ -104,8 +104,8 @@
 
         :precondition
         (and
-            (aparcado-en ?rov ?b)
             (esta-en-rover ?loc ?rov)
+            (aparcado-en ?rov ?b)
             
         )
         :effect
@@ -126,8 +126,8 @@
 
         :precondition
         (and
-            (aparcado-en ?rov ?b)
             (esta-en-rover ?loc ?rov)
+            (aparcado-en ?rov ?b)
             
         )
         :effect

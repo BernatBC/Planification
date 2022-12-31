@@ -69,8 +69,8 @@
 
         :precondition
         (and
-            (aparcado-en ?rov ?b)
             (esta-en-rover ?loc ?rov)
+            (aparcado-en ?rov ?b)
             
         )
         :effect
