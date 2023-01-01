@@ -57,7 +57,7 @@
         :precondition
         (and
             (aparcado-en ?rov ?b)
-            (< (+ (current-capacity ?rov) 1) 3)
+            (< (current-capacity ?rov) 2)
             (esta-en ?loc ?b)
         )
         :effect
@@ -79,7 +79,7 @@
         :precondition
         (and
             (aparcado-en ?rov ?b)
-            (< (+ (current-capacity ?rov) 2) 3)
+            (< (current-capacity ?rov) 1)
             (esta-en ?loc ?b)
             
         )
