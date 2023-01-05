@@ -20,7 +20,26 @@
         (aparcado-en ?rov - rover ?b - base)
         (esta-en-rover ?loc - localizable ?rov - rover)
         (hay-camino ?bas - base ?bas2 - base)
+        (servido ?loc - localizable)
+        (petition ?loc - localizable ?b - base)
         ; Duplicar el "load" o añadir un predicado de "es-persona ?loc - localizable"
+    )
+
+    (:action entrar
+        :parameters (
+            ?loc - localizable
+            ?b - base
+        )
+
+        :precondition (and 
+            (esta-en ?loc ?b)
+            (petition ?loc ?b)
+            (not (servido ?loc))
+        )
+        :effect (and
+            (servido ?loc)
+            (not (esta-en ?loc ?b))
+        )
     )
 
     (:action mover-rover

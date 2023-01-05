@@ -131,7 +131,7 @@ if (ext2 in ["Y", "y", "Yes", "yes", "YES"]):
         f.write("(= (gas-level r"+str(r)+") "+str(random.randint(nbases, nbases*2))+")\n")
 
 if (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
-    f.write("(= (sum-petitions) 0)\n")
+    f.write("(= (sum-petitions) "+str(3*(npersones+ncargues))+")\n")
 
 
 dic = {}
@@ -149,7 +149,15 @@ while (npeticions > 0):
 
     npeticions -= 1
 
-if (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
+if (ext3 not in ["Y", "y", "Yes", "yes", "YES"]):
+    for (loc, listbases) in dic.items():
+        for b in listbases:
+            if (loc < npersones):
+                f.write("(petition p"+str(loc)+" b"+str(b)+")\n")
+            else:
+                f.write("(petition c"+str(loc-npersones)+" b"+str(b)+")\n")
+
+elif (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
     for (loc, listbases) in dic.items():
         for b in listbases:
             rnd = random.randint(1,3)
@@ -164,29 +172,35 @@ if (ext3 in ["Y", "y", "Yes", "yes", "YES"]):
                 if (rnd == 1):
                     f.write("(low-petition c"+str(loc-npersones)+" b"+str(b)+")\n")
                 elif (rnd == 2):
-                    f.write("(medium-petition p"+str(loc-npersones)+" b"+str(b)+")\n")
+                    f.write("(medium-petition c"+str(loc-npersones)+" b"+str(b)+")\n")
                 else:
-                    f.write("(important-petition p"+str(loc-npersones)+" b"+str(b)+")\n")
+                    f.write("(important-petition c"+str(loc-npersones)+" b"+str(b)+")\n")
 
 
 f.write("\n)\n\n(:goal\n(and\n")
 
+#if (ext3 not in ["Y", "y", "Yes", "yes", "YES"]):
+#    for (loc, listbases) in dic.items():
+#        if (len(listbases) == 1):
+#            if (loc < npersones):
+#                f.write("(esta-en p"+str(loc)+" b"+str(listbases[0])+")\n")
+#            else:
+#                f.write("(esta-en c"+str(loc-npersones)+" b"+str(listbases[0])+")\n")
+#            continue
+
+#        f.write("(or ")
+#        for b in listbases:
+#            if (loc < npersones):
+#                f.write("(esta-en p"+str(loc)+" b"+str(b)+") ")
+#            else:
+#                f.write("(esta-en c"+str(loc-npersones)+" b"+str(b)+") ")
+#
+#        f.write(")\n")
 for (loc, listbases) in dic.items():
-    if (len(listbases) == 1):
-        if (loc < npersones):
-            f.write("(esta-en p"+str(loc)+" b"+str(listbases[0])+")\n")
-        else:
-            f.write("(esta-en c"+str(loc-npersones)+" b"+str(listbases[0])+")\n")
-        continue
-
-    f.write("(or ")
-    for b in listbases:
-        if (loc < npersones):
-            f.write("(esta-en p"+str(loc)+" b"+str(b)+") ")
-        else:
-            f.write("(esta-en c"+str(loc-npersones)+" b"+str(b)+") ")
-
-    f.write(")\n")
+    if (loc < npersones):
+        f.write("(servido p"+str(loc)+")\n")
+    else:
+        f.write("(servido c"+str(loc-npersones)+")\n")
 
 f.write("\n)\n)\n")
 
@@ -199,13 +213,13 @@ if (quest in ["Y", "y", "Yes", "yes", "YES"] and ext3 not in ["Y", "y", "Yes", "
     f.write(")\n")
 
 elif (ext3 in ["Y", "y", "Yes", "yes", "YES"] and quest2 not in ["Y", "y", "Yes", "yes", "YES"]):
-    f.write("(:metric minimize\n")
+    f.write("(:metric maximize\n")
     f.write("(sum-petitions) ")
     f.write(")\n")
 
 elif (ext3 in ["Y", "y", "Yes", "yes", "YES"] and quest2 in ["Y", "y", "Yes", "yes", "YES"]):
-    f.write("(:metric minimize\n")
-    f.write("(- (* (sum-petitions) 3) ")
+    f.write("(:metric maximize\n")
+    f.write("(+ (* (sum-petitions) 3) ")
     f.write("(+"*(nrovers-1))
     f.write("(gas-level r0) ")
     for r in range(1, nrovers):
