@@ -1,0 +1,65 @@
+
+ff: parsing domain file
+domain 'EXPERT-LOGISTIC' defined
+ ... done.
+ff: parsing problem file
+problem 'EXPERT-LOGISTIC' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:   17 into depth [1]
+                                  16            [1]
+                                  15            [1]
+                                  14            [1]
+                                  13            [1]
+                                  12            [1]
+                                  11            [1]
+                                  10            [1]
+                                   9            [1]
+                                   8            [1]
+                                   7            [1]
+                                   6            [1]
+                                   5            [1]
+                                   4            [1][2]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: LOAD R0 C2 B2
+        1: LOAD R1 P0 B1
+        2: LOAD R0 C1 B2
+        3: MOVER-ROVER R0 B2 B0
+        4: MOVER-ROVER R0 B0 B1
+        5: MOVER-ROVER R1 B1 B0
+        6: UNLOAD R0 C1 B1
+        7: UNLOAD R0 C2 B1
+        8: UNLOAD R1 P0 B0
+        9: ENTRAR P2 B0
+       10: ENTRAR C1 B1
+       11: ENTRAR C2 B1
+       12: ENTRAR P0 B0
+       13: MOVER-ROVER R0 B1 B3
+       14: LOAD R0 C0 B3
+       15: MOVER-ROVER R0 B3 B1
+       16: UNLOAD R0 C0 B1
+       17: ENTRAR C0 B1
+     
+
+time spent:    0.00 seconds instantiating 104 easy, 16 hard action templates
+               0.00 seconds reachability analysis, yielding 55 facts and 120 actions
+               0.00 seconds creating final representation with 54 relevant facts, 0 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 35 states, to a max depth of 2
+               0.00 seconds total time
+

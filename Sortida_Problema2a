@@ -1,0 +1,80 @@
+
+ff: parsing domain file
+domain 'EXPERT-LOGISTIC' defined
+ ... done.
+ff: parsing problem file
+problem 'EXPERT-LOGISTIC' defined
+ ... done.
+
+
+no metric specified. plan length assumed.
+
+checking for cyclic := effects --- OK.
+
+ff: search configuration is EHC, if that fails then  best-first on 1*g(s) + 5*h(s) where
+    metric is  plan length
+
+Cueing down from goal distance:   19 into depth [1]
+                                  18            [1][2][3]
+                                  17            [1]
+                                  16            [1]
+                                  15            [1][2][3]
+                                  14            [1]
+                                  13            [1]
+                                  12            [1][2][3][4]
+                                  11            [1][2]
+                                  10            [1]
+                                   9            [1]
+                                   8            [1][2][3][4]
+                                   7            [1]
+                                   6            [1]
+                                   5            [1][2]
+                                   4            [1]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+
+step    0: ENTRAR P1 B1
+        1: MOVER-ROVER R1 B0 B1
+        2: LOAD-PERSONA R1 P0 B1
+        3: MOVER-ROVER R1 B1 B0
+        4: UNLOAD-PERSONA R1 P0 B0
+        5: ENTRAR P0 B0
+        6: MOVER-ROVER R1 B0 B1
+        7: LOAD-PERSONA R1 P2 B1
+        8: MOVER-ROVER R1 B1 B0
+        9: UNLOAD-PERSONA R1 P2 B0
+       10: ENTRAR P2 B0
+       11: MOVER-ROVER R1 B0 B1
+       12: MOVER-ROVER R1 B1 B3
+       13: LOAD-CARGA R1 C2 B3
+       14: MOVER-ROVER R1 B3 B2
+       15: MOVER-ROVER R1 B2 B1
+       16: MOVER-ROVER R1 B1 B0
+       17: UNLOAD-CARGA R1 C2 B0
+       18: ENTRAR C2 B0
+       19: MOVER-ROVER R0 B0 B1
+       20: MOVER-ROVER R0 B1 B2
+       21: LOAD-CARGA R0 C1 B2
+       22: MOVER-ROVER R0 B2 B1
+       23: UNLOAD-CARGA R0 C1 B1
+       24: ENTRAR C1 B1
+       25: MOVER-ROVER R0 B1 B2
+       26: LOAD-CARGA R0 C0 B2
+       27: MOVER-ROVER R0 B2 B1
+       28: MOVER-ROVER R0 B1 B0
+       29: UNLOAD-CARGA R0 C0 B0
+       30: ENTRAR C0 B0
+     
+
+time spent:    0.00 seconds instantiating 104 easy, 16 hard action templates
+               0.00 seconds reachability analysis, yielding 56 facts and 120 actions
+               0.00 seconds creating final representation with 56 relevant facts, 6 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 85 states, to a max depth of 4
+               0.00 seconds total time
+
